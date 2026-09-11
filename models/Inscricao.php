@@ -11,7 +11,7 @@ class Inscricao{
     private ?string $data_inscricao;
     private string $status;
 
-    public function __construct(int $id_participante, int $id_atividade, string $status = 'ATIVA', ?int $id_inscricao = null, ?string $data_inscricao)
+    public function __construct(int $id_participante, int $id_atividade, string $status = 'ATIVA', ?int $id_inscricao = null, ?string $data_inscricao = null)
     {
         $this->id_inscricao = $id_inscricao;
         $this->id_participante = $id_participante;
