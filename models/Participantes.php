@@ -1,7 +1,7 @@
 
 <?php 
 
-class Atividade
+class Participantes
 {
     private ?int $id_participante;
     private string $nome_participante;
