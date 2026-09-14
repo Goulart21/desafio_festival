@@ -1,0 +1,129 @@
+<?php
+
+//importar a config e o models
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../models/Atividade.php';
+
+class AtividadeService
+{
+
+    private PDO $pdo;
+
+    public function __construct(PDO $pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
+    //função de cadastrar atividade
+    public function cadastrarAtividade(Atividade $atividade): string
+    {
+
+        $sql = "INSERT INTO atividades
+        (nome_atividade, descricao, data_atividade, hora_inicio, hora_fim, local_atividade, capacidade)
+        VALUES (:nome_atividade, :descricao, :data_atividade, :hora_inicio, :hora_fim, :local_atividade, :capacidade)";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        if ($stmt->execute([
+            ':nome_atividade' => $atividade->getNomeAtividade(),
+            ':descricao' => $atividade->getDescricao(),
+            ':data_atividade' => $atividade->getDataAtividade(),
+            ':hora_inicio' => $atividade->getHoraInicio(),
+            ':hora_fim' => $atividade->getHoraFim(),
+            ':local_atividade' => $atividade->getLocalAtividade(),
+            ':capacidade' => $atividade->getCapacidade()
+        ])) {
+            return 'SUCESSO';
+        }
+        return 'ERRO';
+    }
+
+    //listar atividade
+    public function listarAtividade(): array
+    {
+
+        $sql = "SELECT * FROM atividades ORDER BY nome_atividade";
+        $stmt = $this->pdo->query($sql);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    //buscar por id
+    public function buscarAtividadePorId(int $id_atividade): ?array
+    {
+
+        $sql = "SELECT * FROM atividades WHERE id_atividade = :id";
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            ':id' => $id_atividade
+        ]);
+
+        $atividade = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $atividade ?: null;
+    }
+
+    public function atualizarAtividade(int $id_atividade, Atividade $atividade): string
+    {
+
+        $sql = "UPDATE atividades
+        SET nome_atividade = :nome_atividade,
+        descricao = :descricao,
+        data_atividade = :data_atividade,
+        hora_inicio = :hora_inicio,
+        hora_fim = :hora_fim,
+        local_atividade = :local_atividade,
+        capacidade = :capacidade
+        WHERE id_atividade = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        if ($stmt->execute([
+            ':nome_atividade' => $atividade->getNomeAtividade(),
+            'descricao' => $atividade->getDescricao(),
+            ':data_atividade' => $atividade->getDataAtividade(),
+            ':hora_inicio' => $atividade->getHoraInicio(),
+            ':hora_fim' => $atividade->getHoraFim(),
+            ':local_atividade' => $atividade->getLocalAtividade(),
+            'capacidade' => $atividade->getCapacidade(),
+            ':id' => $id_atividade
+        ])) {
+            return 'ATUALIZADO';
+        }
+        return 'ERRO';
+    }
+
+    //excluir
+
+    public function excluir(int $id_atividade): string{
+        
+        $sql = "SELECT COUNT(*)
+        FROM inscricoes
+        WHERE id_atividade = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            ':id' => $id_atividade
+        ]);
+
+        $quantidade = $stmt->fetchColumn();
+        //verifica se existe id na tabela
+        if($quantidade > 0){
+            return 'POSSUI_INSCRICOES';
+        }
+
+        $sql = "DELETE FROM atividades
+        WHERE id_atividade = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        if($stmt->execute([
+            ':id' => $id_atividade
+        ])){
+            return 'EXCLUIDO';
+        }
+        return 'ERRO';
+    }
+}
