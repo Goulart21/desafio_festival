@@ -1,7 +1,7 @@
 
 <?php
 
-class Participantes
+class Atividade
 {
 
     private ?int $id_atividade;
@@ -62,7 +62,7 @@ class Participantes
         return $this->local_atividade;
     }
 
-    public function getCapacidae(): string
+    public function getCapacidade(): string
     {
         return $this->capacidade;
     }
