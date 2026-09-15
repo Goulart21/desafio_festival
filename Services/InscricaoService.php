@@ -19,7 +19,7 @@ class InscricaoService
     public function cadastrarInscricao(Inscricao $inscricao): string
     {
 
-        $sql = "SELECT COUNT(*)
+    $sql = "SELECT COUNT(*)
     FROM inscricoes
     WHERE id_participante = :id_participante
     and id_atividade = :id_atividade
@@ -78,7 +78,7 @@ class InscricaoService
 
         if ($stmt->execute([
             ':id_participante' => $inscricao->getIdParticipante(),
-            'id_atividade' => $inscricao->getIdAtividade()
+            ':id_atividade' => $inscricao->getIdAtividade()
         ])) {
             return 'SUCESSO';
         }
@@ -99,7 +99,7 @@ class InscricaoService
     ON i.id_participante = p.id_participante
     INNER JOIN atividades a 
     ON i.id_atividade = a.id_atividade
-    ORDER BY id.data_inscricao DESC";
+    ORDER BY i.data_inscricao DESC";
 
         $stmt = $this->pdo->query($sql);
 
