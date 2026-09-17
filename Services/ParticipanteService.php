@@ -30,12 +30,12 @@ class ParticipanteService
             return 'EMAIL_DUPLICADO';
         }
 
-        $sql = "INSERT INTO participantes (nome,email, telefone) VALUES  (:nome, :email, :telefone)";
+        $sql = "INSERT INTO participantes (nome_participante,email, telefone) VALUES  (:nome_participante, :email, :telefone)";
 
         $stmt = $this->pdo->prepare($sql);
 
         if ($stmt->execute([
-            ':nome' => $participantes->getNomeParticipante(),
+            ':nome_participante' => $participantes->getNomeParticipante(),
             ':email' => $participantes->getEmail(),
             ':telefone' => $participantes->getTelefone()
         ])) {
