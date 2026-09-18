@@ -90,7 +90,7 @@ class InscricaoService
     {
 
         $sql = "SELECT i.id_inscricao,
-    p.nome AS nome_participante,
+    p.nome AS nome,
     a.nome_atividade,
     i.data_inscricao,
     i.status
