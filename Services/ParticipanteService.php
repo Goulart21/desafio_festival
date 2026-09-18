@@ -48,7 +48,7 @@ class ParticipanteService
     public function listar(): array
     {
 
-        $sql = "SELECT * FROM participantes ORDER BY nome_participante";
+        $sql = "SELECT * FROM participantes ORDER BY nome";
 
         $stmt = $this->pdo->query($sql);
 
