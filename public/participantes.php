@@ -201,7 +201,7 @@ if (isset($_GET['atualizar'])) {
 
                         <?php foreach ($participantes as $participante): ?>
                             <tr>
-                                <td><?= $participante['nome_participante'] ?></td>
+                                <td><?= $participante['nome'] ?></td>
                                 <td><?= $participante['email'] ?></td>
                                 <td><?= $participante['telefone'] ?></td>
 
