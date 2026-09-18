@@ -1,0 +1,230 @@
+<?php
+
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../models/Inscricao.php';
+require_once __DIR__ . '/../models/Atividade.php';
+require_once __DIR__ . '/../models/Participantes.php';
+
+require_once __DIR__ . '/../Services/ParticipanteService.php';
+require_once __DIR__ . '/../Services/AtividadeService.php';
+require_once __DIR__ . '/../Services/InscricaoService.php';
+
+$participanteService = new ParticipanteService($pdo);
+$atividadeService = new AtividadeService($pdo);
+$inscricaoService = new InscricaoService($pdo);
+
+$participantes = $participanteService->listar();
+$atividades = $atividadeService->listarAtividade();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $id_participante = (int) $_POST['id_participante'];
+    $id_atividade = (int) $_POST['id_atividade'];
+
+    $inscricao = new Inscricao(
+        $id_participante,
+        $id_atividade
+    );
+
+    $resultado = $inscricaoService->cadastrarInscricao($inscricao);
+
+    header('Location: inscricoes.php?mensagem=' . $resultado);
+    exit;
+}
+
+$inscricoes = $inscricaoService->listarInscricoes();
+
+if (isset($_GET['cancelar'])) {
+
+    $id_inscricao = (int) $_GET['cancelar'];
+
+    $inscricaoService->cancelarInscricao($id_inscricao);
+
+    header('Location: inscricoes.php');
+    exit;
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="csss/style.css">
+    <title>Pagina de Inscrições</title>
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="index.php">
+                    <h1>Festival Experiência</h1>
+                </a>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="participantes.php" class="nav-link">
+                            Participantes
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="atividades.php" class="nav-link">
+                            Atividades
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="inscricoes.php" class="nav-link">
+                            Inscrições
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <?php if (isset($_GET['mensagem'])): ?>
+
+            <?php if ($_GET['mensagem'] === 'SUCESSO'): ?>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Inscrições realizada
+                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Fechar">
+                    </button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'DUPLICADA'): ?>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Participante já cadastrado nessa atividade
+                    <button type="button" class="btn btn-close alert-dismissible fade show" role="alert"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'LOTADA'): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Atividade lotada
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+
+            <?php elseif ($_GET['mensagem'] === 'ATIVIDADE_NAO_ENCONTRADA'): ?>
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Atividade não encontrada
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <section class="mb-4 mt-4">
+            <h2 class="text-center">Cadastrado de Inscrições</h2>
+
+            <div class="row justify-content-center">
+
+                <div class="col-md col-lg-6">
+
+                <form action="" method="post">
+
+                    <div class="mb-3">
+
+                        <label for="id_participante" class="form-label">Participante:</label>
+                        <select name="id_participante" id="id_participante" class="form-select" required>
+                            <option value="">
+                                Selecione um participante
+                            </option>
+
+                            <?php foreach($participantes as $participante): ?>
+                                <option value="<?= $participante['id_participante'] ?>">
+                                    <?= htmlspecialchars($participante['nome']) ?>
+                                </option>
+
+                                <?php endforeach;?>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_atividade" class="form-label">Atividade:</label>
+
+                        <select name="id_atividade" id="id_atividade" class="form-select" required>
+                            <option value="">
+                                Selecione uma Atividade
+                            </option>
+
+                            <?php foreach($atividades as $atividade): ?>
+                                <option value="<?= $atividade['id_atividade'] ?>">
+                                    <?= htmlspecialchars($atividade['nome_atividade']) ?>
+                                </option>
+
+                                <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">Inscrever Participantes</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mb-5">
+            <h2 class="mb-4">Inscrições cadastradas</h2>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Participantes</th>
+                            <th>Atividade</th>
+                            <th>Data de Inscrições</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                                <?php foreach($inscricoes as $inscricao): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($inscricao['nome']) ?></td>
+                                        <td><?= htmlspecialchars($inscricao['nome_atividade']) ?></td>
+                                        <td><?= $inscricao['data_inscricao'] ?></td>
+                                        <td> <?= $inscricao['status'] ?></td>
+                                        <td>
+
+                                            <?php if($inscricao['status'] === 'ATIVA'): ?>
+                                                <a href="inscricoes.php?cancelar=<?= $inscricao['id_inscricao'] ?>"
+                                                class="btn btn-danger" onclick="return confirm('Deseja cancelar essa inscrição ?')">Cancelar</a>
+
+                                                <?php else:?>
+                                                    <span class="text-muted">Cancelada</span>
+                                        </td>
+
+                                        <?php endif;?>
+                                    </tr>
+                    </tbody>
+
+                    <?php endforeach;?>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Festival Experiência Viva
+    </footer>
+
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
