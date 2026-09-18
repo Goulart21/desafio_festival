@@ -46,25 +46,25 @@ $ocupacaoAtividade = $pdo->query(
 
 <body>
     <header>
+
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container">
                 <a class="navbar-brand" href="index.php">
-                    <h1>Festival Experiência Viva</h1>
+                    <h1>Festival Experiência</h1>
                 </a>
-
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacao"
                     aria-controls="menuNavegacao" aria-expanded="false" aria-label="Abrir menu"><span class="navbar-toggler-icon"></span></button>
 
                 <div class="collpse navbar-collapse" id="menuNavegacao">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="participantes.php">
+                            <a href="participantes.php" class="nav-link">
                                 Participantes
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="atividades.php">
+                            <a href="atividades.php" class="nav-link">
                                 Atividades
                             </a>
                         </li>
@@ -79,7 +79,6 @@ $ocupacaoAtividade = $pdo->query(
             </div>
         </nav>
     </header>
-
     <main>
 
         <section class="container text-center py-5">

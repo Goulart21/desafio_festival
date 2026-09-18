@@ -61,7 +61,7 @@ if (isset($_GET['atualizarAtividade'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-        <link rel="stylesheet" href="csss/style.css">
+    <link rel="stylesheet" href="csss/style.css">
     <title>Pagina de Atividades</title>
 </head>
 
@@ -73,26 +73,30 @@ if (isset($_GET['atualizarAtividade'])) {
                 <a class="navbar-brand" href="index.php">
                     <h1>Festival Experiência Viva</h1>
                 </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacao"
+                    aria-controls="menuNavegacao" aria-expanded="false" aria-label="Abrir menu"><span class="navbar-toggler-icon"></span></button>
 
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="participantes.php">
-                            Participantes
-                        </a>
-                    </li>
+                <div class="collpse navbar-collapse" id="menuNavegacao">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="participantes.php">
+                                Participantes
+                            </a>
+                        </li>
 
-                    <li class="navbar-nav ms-auto">
-                        <a class="nav-link" href="atividades.php">
-                            Atividades
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="atividades.php">
+                                Atividades
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a href="inscricoes.php" class="nav-link">
-                            Inscrições
-                        </a>
-                    </li>
-                </ul>
+                        <li class="nav-item">
+                            <a href="inscricoes.php" class="nav-link">
+                                Inscrições
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>

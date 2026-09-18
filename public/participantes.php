@@ -70,31 +70,36 @@ if (isset($_GET['atualizar'])) {
 <body>
 
     <header>
+
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container">
                 <a class="navbar-brand" href="index.php">
-                    <h1>Festival Experiência Viva</h1>
+                    <h1>Festival Experiência</h1>
                 </a>
-                <ul class="navbar-nav ms-auto">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacao"
+                    aria-controls="menuNavegacao" aria-expanded="false" aria-label="Abrir menu"><span class="navbar-toggler-icon"></span></button>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="participantes.php">
-                            Participantes
-                        </a>
-                    </li>
+                <div class="collpse navbar-collapse" id="menuNavegacao">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a href="participantes.php" class="nav-link">
+                                Participantes
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="atividades.php">
-                            Atividades
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="atividades.php" class="nav-link">
+                                Atividades
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="inscricoes.php">
-                            Inscrições
-                        </a>
-                    </li>
-                </ul>
+                        <li class="nav-item">
+                            <a href="inscricoes.php" class="nav-link">
+                                Inscrições
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>

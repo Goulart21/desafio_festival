@@ -67,26 +67,30 @@ if (isset($_GET['cancelar'])) {
                 <a class="navbar-brand" href="index.php">
                     <h1>Festival Experiência</h1>
                 </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacao"
+                    aria-controls="menuNavegacao" aria-expanded="false" aria-label="Abrir menu"><span class="navbar-toggler-icon"></span></button>
 
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a href="participantes.php" class="nav-link">
-                            Participantes
-                        </a>
-                    </li>
+                <div class="collpse navbar-collapse" id="menuNavegacao">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a href="participantes.php" class="nav-link">
+                                Participantes
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a href="atividades.php" class="nav-link">
-                            Atividades
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="atividades.php" class="nav-link">
+                                Atividades
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a href="inscricoes.php" class="nav-link">
-                            Inscrições
-                        </a>
-                    </li>
-                </ul>
+                        <li class="nav-item">
+                            <a href="inscricoes.php" class="nav-link">
+                                Inscrições
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
@@ -133,46 +137,46 @@ if (isset($_GET['cancelar'])) {
 
                 <div class="col-md col-lg-6">
 
-                <form action="" method="post">
+                    <form action="" method="post">
 
-                    <div class="mb-3">
+                        <div class="mb-3">
 
-                        <label for="id_participante" class="form-label">Participante:</label>
-                        <select name="id_participante" id="id_participante" class="form-select" required>
-                            <option value="">
-                                Selecione um participante
-                            </option>
-
-                            <?php foreach($participantes as $participante): ?>
-                                <option value="<?= $participante['id_participante'] ?>">
-                                    <?= htmlspecialchars($participante['nome']) ?>
+                            <label for="id_participante" class="form-label">Participante:</label>
+                            <select name="id_participante" id="id_participante" class="form-select" required>
+                                <option value="">
+                                    Selecione um participante
                                 </option>
 
-                                <?php endforeach;?>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="id_atividade" class="form-label">Atividade:</label>
-
-                        <select name="id_atividade" id="id_atividade" class="form-select" required>
-                            <option value="">
-                                Selecione uma Atividade
-                            </option>
-
-                            <?php foreach($atividades as $atividade): ?>
-                                <option value="<?= $atividade['id_atividade'] ?>">
-                                    <?= htmlspecialchars($atividade['nome_atividade']) ?>
-                                </option>
+                                <?php foreach ($participantes as $participante): ?>
+                                    <option value="<?= $participante['id_participante'] ?>">
+                                        <?= htmlspecialchars($participante['nome']) ?>
+                                    </option>
 
                                 <?php endforeach; ?>
-                        </select>
-                    </div>
+                            </select>
+                        </div>
 
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-success">Inscrever Participantes</button>
-                    </div>
-                </form>
+                        <div class="mb-3">
+                            <label for="id_atividade" class="form-label">Atividade:</label>
+
+                            <select name="id_atividade" id="id_atividade" class="form-select" required>
+                                <option value="">
+                                    Selecione uma Atividade
+                                </option>
+
+                                <?php foreach ($atividades as $atividade): ?>
+                                    <option value="<?= $atividade['id_atividade'] ?>">
+                                        <?= htmlspecialchars($atividade['nome_atividade']) ?>
+                                    </option>
+
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Inscrever Participantes</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>
@@ -194,27 +198,27 @@ if (isset($_GET['cancelar'])) {
 
                     <tbody>
 
-                                <?php foreach($inscricoes as $inscricao): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($inscricao['nome']) ?></td>
-                                        <td><?= htmlspecialchars($inscricao['nome_atividade']) ?></td>
-                                        <td><?= $inscricao['data_inscricao'] ?></td>
-                                        <td> <?= $inscricao['status'] ?></td>
-                                        <td>
+                        <?php foreach ($inscricoes as $inscricao): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($inscricao['nome']) ?></td>
+                                <td><?= htmlspecialchars($inscricao['nome_atividade']) ?></td>
+                                <td><?= $inscricao['data_inscricao'] ?></td>
+                                <td> <?= $inscricao['status'] ?></td>
+                                <td>
 
-                                            <?php if($inscricao['status'] === 'ATIVA'): ?>
-                                                <a href="inscricoes.php?cancelar=<?= $inscricao['id_inscricao'] ?>"
-                                                class="btn btn-danger" onclick="return confirm('Deseja cancelar essa inscrição ?')">Cancelar</a>
+                                    <?php if ($inscricao['status'] === 'ATIVA'): ?>
+                                        <a href="inscricoes.php?cancelar=<?= $inscricao['id_inscricao'] ?>"
+                                            class="btn btn-danger" onclick="return confirm('Deseja cancelar essa inscrição ?')">Cancelar</a>
 
-                                                <?php else:?>
-                                                    <span class="text-muted">Cancelada</span>
-                                        </td>
+                                    <?php else: ?>
+                                        <span class="text-muted">Cancelada</span>
+                                </td>
 
-                                        <?php endif;?>
-                                    </tr>
+                            <?php endif; ?>
+                            </tr>
                     </tbody>
 
-                    <?php endforeach;?>
+                <?php endforeach; ?>
                 </table>
             </div>
         </section>
@@ -224,7 +228,7 @@ if (isset($_GET['cancelar'])) {
         Festival Experiência Viva
     </footer>
 
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
