@@ -79,13 +79,13 @@ if (isset($_GET['atualizarAtividade'])) {
                 <div class="collpse navbar-collapse" id="menuNavegacao">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="participantes.php">
+                            <a href="participantes.php" class="nav-link">
                                 Participantes
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="atividades.php">
+                            <a href="atividades.php" class="nav-link">
                                 Atividades
                             </a>
                         </li>
