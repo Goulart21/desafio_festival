@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = (int) $_POST['id_participante'];
         $resultado = $service->atualizar($id, $participante);
 
-        header('Location: participante.php?mensagem=ATUALIZADO');
+        header('Location: participantes.php?mensagem=ATUALIZADO');
         exit;
     } else {
         $resultado = $service->cadastrar($participante);
