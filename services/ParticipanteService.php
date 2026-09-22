@@ -27,8 +27,16 @@ class ParticipanteService
             ':email' => $participante->getEmail()
         ]);
 
+        if ($stmt->fetchColumn() > 0) {
+            return 'EMAIL_DUPLICADO';
+        }
+
+        $sql = "INSERT INTO participantes (nome_participante,email,telefone) VALUES (:nome_participante, :email, :telefone)";
+
+        $stmt = $this->pdo->prepare($sql);
+
         if ($stmt->execute([
-            ':nome' => $participante->getNomeParticipante(),
+            ':nome_participante' => $participante->getNomeParticipante(),
             ':email' => $participante->getEmail(),
             ':telefone' => $participante->getTelefone()
         ])) {
