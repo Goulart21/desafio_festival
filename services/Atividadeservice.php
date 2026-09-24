@@ -75,7 +75,7 @@ class Atividadeservice
         hora_inicio = :hora_inicio,
         hora_fim = :hora_fim,
         local_atividade = :local_atividade,
-        capacidade = :capacidade,
+        capacidade = :capacidade
         WHERE id_atividade = :id";
 
         $stmt = $this->pdo->prepare($sql);
@@ -107,7 +107,7 @@ class Atividadeservice
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute([
-            'id:' => $id_atividade
+            ':id' => $id_atividade
         ]);
 
         $quantidade = $stmt->fetchColumn();
@@ -116,14 +116,14 @@ class Atividadeservice
             return 'POSSUI_INSCRICOES';
         }
 
-        $sql = "DELETE FROM atividaes
+        $sql = "DELETE FROM atividades
         WHERE  id_atividade = :id";
 
         $stmt = $this->pdo->prepare($sql);
 
         if($stmt->execute([
             ':id' => $id_atividade
-        ])){
+        ])) {
             return 'EXCLUIDO';
         }
 

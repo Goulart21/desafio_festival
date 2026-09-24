@@ -48,7 +48,7 @@ class ParticipanteService
     public function listar(): array
     {
 
-        $sql = "SELECT * FROM participantes ORDER BY nome";
+        $sql = "SELECT * FROM participantes ORDER BY nome_participante";
 
         $stmt = $this->pdo->query($sql);
 
@@ -75,15 +75,15 @@ class ParticipanteService
     ): bool {
 
         $sql = "UPDATE participantes
-        SET nome = :nome,
+        SET nome_participante = :nome_participante,
         email = :email,
-        telefone :telefone,
+        telefone = :telefone
         WHERE id_participante = :id";
 
         $stmt = $this->pdo->prepare($sql);
 
         return $stmt->execute([
-            ':nome' => $participante->getNomeParticipante(),
+            'nome_participante' => $participante->getNomeParticipante(),
             ':email' => $participante->getEmail(),
             ':telefone' => $participante->getTelefone(),
             ':id' => $id_participante
