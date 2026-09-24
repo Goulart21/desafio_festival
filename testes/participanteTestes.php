@@ -18,7 +18,29 @@ if($service->cadastrar($participante)){
     echo "Participane cadastrado";
 }
 
+$participante = $service->listar();
+echo "<pre>";
+print_r($participante);
+echo "<pre>";
 
+$participante = $service->excluir(3);
+
+$participante = $service->buscarPorId(2);
+echo "<pre>";
+print_r($participante);
+echo "<pre>";
+
+
+
+$participanteAtualizado = new Participantes(
+    'Atualizado',
+    'a@gmail.com',
+    '31999'
+);
+
+if($service->atualizar(2,$participanteAtualizado)){
+    echo "AA";
+}
 
 
 ?>
