@@ -7,7 +7,7 @@ require_once __DIR__ . '/../services/Atividadeservice.php';
 
 $service = new Atividadeservice($pdo);
 
-/*
+
 $atividade = new Atividades(
     'Teste',
     'descricao',
@@ -19,7 +19,7 @@ $atividade = new Atividades(
 );
 
 $service->cadastrarAtividade($atividade);
-*/
+
 
 
 $atividade = $service->listarAtividade();
