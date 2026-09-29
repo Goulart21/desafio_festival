@@ -1,8 +1,7 @@
 
-
 <?php
 
-class Participantes
+class ParticipanteModel
 {
 
     private ?int $id_participante;
@@ -11,13 +10,8 @@ class Participantes
     private string $telefone;
     private ?string $data_cadastro;
 
-    public function __construct(
-        string $nome_participante,
-        string $email,
-        string $telefone,
-        ?int $id_participante = null,
-        ?string $data_cadastro = null
-    ) {
+    public function __construct(string $nome_participante, string $email, string $telefone, ?int $id_participante = null, ?int $data_cadastro = null)
+    {
         $this->id_participante = $id_participante;
         $this->nome_participante = $nome_participante;
         $this->email = $email;
@@ -25,14 +19,13 @@ class Participantes
         $this->data_cadastro = $data_cadastro;
     }
 
-    public function getIdParticipante(): ?int
+    public function getIdAtividade(): ?int
     {
         return $this->id_participante;
     }
 
     public function getNomeParticipante(): string
     {
-
         return $this->nome_participante;
     }
 

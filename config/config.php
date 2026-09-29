@@ -2,30 +2,23 @@
 <?php
 
 $host = 'localhost';
-$dbname = 'festival_experiencia';
+$dbname = 'festival_experiencia_viva';
 $username = 'root';
-$senha = 'senac@2026';
+$password = 'senac@2026';
 
 try {
 
     $pdo = new PDO(
         "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
         $username,
-        $senha
-
+        $password
     );
 
-    $pdo->setAttribute(
-        PDO::ATTR_ERRMODE,
-        PDO::ERRMODE_EXCEPTION
-    );
-    echo "Conectado";
+    echo "conectado";
 } catch (PDOException $e) {
 
-    die("Erro na conexão $e");
+    die("Erro ao conectar");
 }
-
-
 
 
 ?>

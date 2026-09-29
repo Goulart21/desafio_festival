@@ -1,7 +1,8 @@
 
+
 <?php
 
-class Inscricoes
+class InscricaoModel
 {
 
     private ?int $id_inscricao;
@@ -15,7 +16,7 @@ class Inscricoes
         $this->id_inscricao = $id_inscricao;
         $this->id_participante = $id_participante;
         $this->id_atividade = $id_atividade;
-        $this->data_inscricao  = $data_inscricao;
+        $this->data_inscricao = $data_inscricao;
         $this->status = $status;
     }
 
@@ -44,8 +45,6 @@ class Inscricoes
         return $this->status;
     }
 }
-
-
 
 
 ?>
