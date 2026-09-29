@@ -6,14 +6,14 @@ class AtividadeModel{
 
     private ?int $id_atividade;
     private string $nome_atividade;
-    private string $descricao;
+    private ?string $descricao;
     private string $data_atividade;
     private string $hora_inicio;
     private string $hora_fim;
     private string $local_atividade;
     private int $capacidade;
 
-    public function __construct(string $nome_atividade, string $descricao, string $data_atividade, string $hora_inicio, string $hora_fim, string $local_atividade, int $capacidade, ?int $id_atividade)
+    public function __construct(string $nome_atividade, ?string $descricao, string $data_atividade, string $hora_inicio, string $hora_fim, string $local_atividade, int $capacidade, ?int $id_atividade = null)
     {
         
         $this->id_atividade = $id_atividade;
@@ -35,11 +35,11 @@ class AtividadeModel{
         return $this->nome_atividade;
     }
 
-    public function getDescricao(): string{
+    public function getDescricao(): ?string{
         return $this->descricao;
     }
 
-    public function getDataAtividade(): string{
+    public function getDataAtividade(): ?string{
         return $this->data_atividade;
     }
 

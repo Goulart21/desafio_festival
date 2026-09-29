@@ -1,0 +1,101 @@
+
+<?php
+
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../models/ParticipanteModel.php';
+
+class ParticipanteService
+{
+
+    private PDO $pdo;
+
+    public function __construct(PDO $pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
+    public function cadastrarParticipante(ParticipanteModel $participante): string
+    {
+
+        $sql = "SELECT COUNT(*)
+        FROM participantes
+        WHERE email = :email";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            ':email' => $participante->getEmail()
+        ]);
+
+        if ($stmt->fetchColumn() > 0) {
+            return 'EMAIL_DUPLICADO';
+        }
+
+        $sql = "INSERT INTO participantes (nome_participante,email, telefone) VALUES (:nome_participante, :email, :telefone)";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        if ($stmt->execute([
+            ':nome_participante' => $participante->getNomeParticipante(),
+            ':email' => $participante->getEmail(),
+            ':telefone' => $participante->getTelefone()
+        ])) {
+            return 'SUCESSO';
+        }
+
+        return 'ERRO';
+    }
+
+    public function listarParticipantes(): array {
+
+        $sql = "SELECT * FROM participantes ORDER BY nome_participante";
+        $stmt = $this->pdo->query($sql);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function buscarPorIdParticipante(int $id): ?array{
+
+        $sql = "SELECT * FROM participantes WHERE id_participante = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':id' => $id
+        ]);
+
+        $participante = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $participante ?: null;
+    }
+
+    public function atualizarParticipante(
+        int $id_participante, ParticipanteModel $participante
+    ): bool{
+
+        $sql = "UPDATE participantes
+        SET nome_participante = :nome_participante,
+        email = :email,
+        telefone = :telefone
+        WHERE id_participante = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':nome_participante' => $participante->getNomeParticipante(),
+            ':email' => $participante->getEmail(),
+            ':telefone' => $participante->getTelefone(),
+            ':id' => $id_participante
+        ]);
+    }
+
+    public function excluirParticipante(int $id_participante): bool{
+
+        $sql = "DELETE FROM participantes
+        WHERE id_participante = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([
+            ':id' => $id_participante
+        ]);
+    }
+}
+
+?>
