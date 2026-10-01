@@ -14,7 +14,7 @@ try {
         $password
     );
 
-    echo "conectado";
+   
 } catch (PDOException $e) {
 
     die("Erro ao conectar");

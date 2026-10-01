@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     $resultado = $inscricaoService->cadastrarInscricao($inscricao);
-    header('Location: inscricao.php?mensagem= ' . $resultado);
+    header('Location: inscricao.php?mensagem=' . $resultado);
 }
 
 $inscricoes = $inscricaoService->listarInscricoes();
@@ -52,6 +52,7 @@ if (isset($_GET['cancelar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
     <title>Participantes</title>
 </head>
 
@@ -60,7 +61,7 @@ if (isset($_GET['cancelar'])) {
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container">
                 <a class="navbar-brand" href="index.php">
-                    <h1>Festival Experiência Viva</h1>
+                    <h1>Experiência Viva</h1>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacao"
@@ -90,47 +91,47 @@ if (isset($_GET['cancelar'])) {
 
     </header>
 
-    <main>
+    <main class="container">
 
         <?php if (isset($_GET['mensagem'])): ?>
 
             <?php if ($_GET['mensagem'] === 'SUCESSO'): ?>
 
-                <div class="alert alert-success alert-dismissible fade show" role="start">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
                     Inscrição Realizada
 
-                    <button type="button" class="btn-close" data-bs-dimiss="alert" aria-label="Fechar"></button>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
                 </div>
 
             <?php elseif ($_GET['mensagem'] === 'DUPLICADA'): ?>
 
-                <div class="alert alert-danger alert-dismissible fade show" role="start">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     Inscrição duplicada
 
-                    <button type="button" class="btn-close" data-bs-dimiss="alert" aria-label="Fechar"></button>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
                 </div>
 
             <?php elseif ($_GET['mensagem'] === 'LOTADA'): ?>
 
-                <div class="alert alert-success alert-dismissible fade show" role="start">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
                     Atividade lotada
 
-                    <button type="button" class="btn-close" data-bs-dimiss="alert" aria-label="Fechar"></button>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
                 </div>
 
             <?php elseif ($_GET['mensagem'] === 'ATIVIDADE_NAO_ENCONTRADA'): ?>
 
-                <div class="alert alert-success alert-dismissible fade show" role="start">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
                     ATIVIDADE NÃO ENCONTRADA
 
-                    <button type="button" class="btn-close" data-bs-dimiss="alert" aria-label="Fechar"></button>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
                 </div>
 
             <?php elseif ($_GET['mensagem'] === 'ERRO'): ?>
 
-                <div class="alert alert-success alert-dismissible fade show" role="start">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
                     ERRO
-                    <button type="button" class="btn-close" data-bs-dimiss="alert" aria-label="Fechar"></button>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
                 </div>
             <?php endif; ?>
         <?php endif; ?>
@@ -162,17 +163,11 @@ if (isset($_GET['cancelar'])) {
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                    </form>
-                </div>
-
-                <div class="col-md-8 col-lg-6">
-
-                    <form action="" method="post">
 
                         <div class="mb-3">
 
                             <label for="id_atividade" class="form-label">Atividade:</label>
-                            <select name="id_atividade" id="id_atividadade" class="form-select" required>
+                            <select name="id_atividade" id="id_atividade" class="form-select" required>
                                 <option value="">
                                     Selecione um participante
                                 </option>
@@ -185,12 +180,13 @@ if (isset($_GET['cancelar'])) {
 
                                 <?php endforeach; ?>
                             </select>
-
-                            <div class="text-center">
-
-                                <button type="submit" class="btn btn-success">Inscrever Participante</button>
-                            </div>
                         </div>
+                        <div class="text-center">
+
+                            <button type="submit" class="btn btn-success">Inscrever Participante</button>
+                        </div>
+
+
                     </form>
                 </div>
             </div>
@@ -217,15 +213,15 @@ if (isset($_GET['cancelar'])) {
                         <?php foreach ($inscricoes as $inscricao): ?>
                             <tr>
                                 <td><?= htmlspecialchars($inscricao['nome_participante']) ?></td>
-                                <td><?= htmlspecialchars($inscricao['email']) ?></td>
+                                <td><?= htmlspecialchars($atividade['nome_atividade']) ?></td>
                                 <td><?= $inscricao['data_inscricao'] ?></td>
                                 <td><?= $inscricao['status'] ?></td>
 
                                 <td>
 
                                     <?php if ($inscricao['status'] === 'ATIVA'): ?>
-                                        <a href="participante.php?excluir=<?= $inscricao['id_inscricao'] ?>"
-                                            class="btn btn-danger" onclick="return confirmarExclusao()">Excluir</a>
+                                        <a href="inscricao.php?cancelar=<?= $inscricao['id_inscricao'] ?>"
+                                            class="btn btn-danger" onclick="return confirm('Deseja cancelar essa inscrição ?')">Cancelar</a>
                                     <?php else: ?>
                                         <span class="text-muted">Cancelada</span>
                                 </td>
@@ -239,7 +235,7 @@ if (isset($_GET['cancelar'])) {
         </section>
     </main>
 
-     <footer>
+    <footer>
         Festival Experiência Viva
     </footer>
 

@@ -48,7 +48,7 @@ class InscricaoService
         $capacidade = $stmt->fetchColumn();
 
         if ($capacidade === false) {
-            return 'ATIVIDADE_NA0_ENCONTRADA';
+            return 'ATIVIDADE_NAO_ENCONTRADA';
         }
 
         $sql = "SELECT COUNT(*)
@@ -66,6 +66,37 @@ class InscricaoService
 
         if ($quantidadeInscritos >= $capacidade) {
             return 'LOTADA';
+        }
+
+        $sql = "SELECT id_inscricao
+        FROM inscricoes
+        WHERE id_participante = :id_participante
+        AND id_atividade = :id_atividade
+        AND status = 'CANCELADA'";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            ':id_participante' => $inscricao->getIdParticipante(),
+            ':id_atividade' => $inscricao->getIdAtividade()
+        ]);
+
+        $cancelada = $stmt->fetchColumn();
+        if ($cancelada) {
+
+            $sql = "UPDATE inscricoes
+            SET status = 'ATIVA'
+            WHERE id_inscricao = :id";
+
+
+            $stmt = $this->pdo->prepare($sql);
+
+            if ($stmt->execute([
+                ':id' => $cancelada
+            ])) {
+                return 'SUCESSO';
+            }
+            return 'ERRO';
         }
 
         $sql = "INSERT INTO inscricoes
